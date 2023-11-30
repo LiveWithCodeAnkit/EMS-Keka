@@ -1,9 +1,9 @@
 {
   "private": true,
   "name": "ems-website",
-  "description": "Opash EMS Web",
+  "description": "EMS Keka",
   "version": "1.0.0",
-  "author": "Ketan Patel <ktan.p.patel@gmail.com>",
+  "author": "Ankit Yadav",
   "scripts": {
     "dev": "next",
     "build": "next build && next export",
