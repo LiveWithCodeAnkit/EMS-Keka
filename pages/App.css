@@ -1,0 +1,12 @@
+.date_Time_picker {
+  font-weight: 600;
+}
+
+.fc-today-button {
+  display: none;
+}
+.custom-header-class {
+  background-color: gray;
+  padding: 5rem;
+  /* Add other styles as needed */
+}

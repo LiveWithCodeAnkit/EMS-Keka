@@ -1,0 +1,10 @@
+node_modules
+*.log
+.next
+app
+dist
+out
+*.lock
+*-lock.json
+.env*.local
+.DS_Store
