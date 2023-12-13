@@ -29,6 +29,7 @@
     "draft-js": "^0.11.7",
     "draftjs-to-html": "^0.9.1",
     "framer-motion": "^6.5.1",
+    "fullcalendar": "^6.1.10",
     "install": "^0.13.0",
     "next": "^12.3.4",
     "react": "^18.2.0",
