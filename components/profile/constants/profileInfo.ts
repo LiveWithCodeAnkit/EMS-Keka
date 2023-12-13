@@ -20,11 +20,11 @@ export const teamData = [
 export const reportingManagerData = [
   {
     id: 1,
-    managerName: "Mr. Ketan",
+    managerName: "Mr. Ankit",
   },
   {
     id: 2,
-    managerName: "Mr. Hiren",
+    managerName: "Mr. Ankur",
   },
   {
     id: 3,

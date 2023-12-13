@@ -3,7 +3,7 @@
   "name": "ems-website",
   "description": "Opash EMS Web",
   "version": "1.0.0",
-  "author": "Ketan Patel <ktan.p.patel@gmail.com>",
+  "author": "Ankit yadav",
   "scripts": {
     "dev": "next",
     "build": "next build && next export",

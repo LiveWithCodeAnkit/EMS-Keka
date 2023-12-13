@@ -405,4 +405,4 @@ export const leaveMenubar = [
   },
 ];
 
-export const leaveApprover = ["Ketan Patel", "Jhon Thomas", "Kevin Jhon"];
+export const leaveApprover = ["Ankit Yadav", "Jhon Thomas", "Kevin Jhon"];
