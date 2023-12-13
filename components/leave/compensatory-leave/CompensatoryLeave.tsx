@@ -5,8 +5,6 @@ import {
   Text,
   FormControl,
   FormLabel,
-  Input,
-  Textarea,
   Button,
   Alert,
   FormErrorMessage,
@@ -14,10 +12,13 @@ import {
 import { RangeDatepicker } from "chakra-dayzed-datepicker";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, Controller } from "react-hook-form";
-import { useCompensatory } from "../hook/useCompensatory";
+import { TextareaControl } from "@atoms/Textarea";
+import { useCompensatory } from "../hook";
 
 const CompensatoryLeave = ({ onClose }) => {
-  const { schema, handleCompensatoryLeave } = useCompensatory({onClose});
+  const { initialValues, schema, submit } = useCompensatory({
+    onClose,
+  });
 
   const {
     handleSubmit,
@@ -31,7 +32,7 @@ const CompensatoryLeave = ({ onClose }) => {
 
   return (
     <>
-      <form onSubmit={handleSubmit(handleCompensatoryLeave)}>
+      <form onSubmit={handleSubmit(submit)}>
         <Box
           as="div"
           sx={{
@@ -63,27 +64,15 @@ const CompensatoryLeave = ({ onClose }) => {
               {errors.dateRange && errors.dateRange.message}
             </FormErrorMessage>
           </FormControl>
-          <FormControl isInvalid={!!errors.leaveNote}>
-            {" "}
-            <FormLabel>Note</FormLabel>
-            <Controller
-              name="leaveNote"
-              control={control}
-              render={({ field }) => (
-                <Input
-                  as={Textarea}
-                  type="Textarea"
-                  placeholder="Type Here"
-                  size="md"
-                  name="leaveNote"
-                  {...field}
-                />
-              )}
-            />
-            <FormErrorMessage>
-              {errors.leaveNote && errors.leaveNote.message}
-            </FormErrorMessage>
-          </FormControl>
+
+          <TextareaControl
+            label="Note"
+            name="leaveNote"
+            control={control}
+            defaultValue={initialValues.leaveNote}
+            errors={errors}
+          />
+
           <Button>
             <BsPaperclip />
             Upload Files

@@ -242,7 +242,7 @@ const AttendanceAction = () => {
           </ModalHeader>
           <ModalCloseButton color="white" fontWeight="bold" fontSize="1rem" />
           <ModalBody>
-            <DutyOnRequest />
+            <DutyOnRequest onClose={onClose} />
           </ModalBody>
         </ModalContent>
       </Modal>
@@ -262,7 +262,7 @@ const AttendanceAction = () => {
           </ModalHeader>
           <ModalCloseButton color="white" fontWeight="bold" fontSize="1rem" />
           <ModalBody>
-            <PartialDay />
+            <PartialDay onClose={collapsible1.onClose} />
           </ModalBody>
         </ModalContent>
       </Modal>
@@ -282,7 +282,7 @@ const AttendanceAction = () => {
           </ModalHeader>
           <ModalCloseButton color="white" fontWeight="bold" fontSize="1rem" />
           <ModalBody>
-            <WorkFromHome />
+            <WorkFromHome onClose={collapsible2.onClose} />
           </ModalBody>
         </ModalContent>
       </Modal>

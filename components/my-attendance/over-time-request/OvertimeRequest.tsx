@@ -1,8 +1,6 @@
 import {
   Box,
   Button,
-  Center,
-  Flex,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -15,8 +13,8 @@ import {
 import React from "react";
 import { CiCircleAlert } from "react-icons/ci";
 import OvertimeLogs from "./OvertimeLogs";
-import CancelLeave from "../../leave/cancel-leave/CancelLeave";
 import ApplyOvertime from "./ApplyOvertime";
+
 const OvertimeRequest = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (

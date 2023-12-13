@@ -12,7 +12,8 @@ import {
   Textarea,
   useDisclosure,
 } from "@chakra-ui/react";
-import { useAbout } from "../hook/useAbout";
+import { useAbout } from "../hook";
+
 
 const AboutHobby = () => {
   const { isOpen, onToggle } = useDisclosure();

@@ -1,6 +1,5 @@
-import { useToastMessages } from "../../common-hooks/useToastMessages";
-import { leaveSchema } from "../schema/leaveSchema";
-
+import { useToastMessages } from "@common-hooks/useToastMessages";
+import { leaveSchema } from "../schema";
 interface LeaveProps {
   fromDate: Date;
   toDate: Date;
@@ -27,15 +26,15 @@ export const useLeave = ({ onClose }: UseLeaveProps) => {
     customToDateStatus: "",
   };
 
-  const handleLeave =async (values: LeaveProps) => {
+  const handleLeave = async (values: LeaveProps) => {
     console.log("handle leave function:=", values);
-     Success("Leave Application send", "Application  Sending");
+    Success("Leave Application send", "Application  Sending");
     onClose();
   };
 
   return {
     initialValues,
     schema: leaveSchema,
-    handleLeave,
+    submit: handleLeave,
   };
 };

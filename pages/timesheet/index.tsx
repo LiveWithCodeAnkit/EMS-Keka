@@ -1,13 +1,13 @@
 import React from "react";
-import Layout from "../layout/Layout";
 import Timesheet from "../../components/timesheet/Timesheet";
+import LeaveLayout from "../../components/leave/layout/LeaveLayout";
 
 const TimesheetPage = () => {
   return (
     <>
-      <Layout>
+      <LeaveLayout>
         <Timesheet />
-      </Layout>
+      </LeaveLayout>
     </>
   );
 };

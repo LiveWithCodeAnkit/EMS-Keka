@@ -380,7 +380,7 @@ export const leaveMenubar = [
   },
   {
     id: "02",
-    path: "/leave/timesheet",
+    path: "/timesheet",
     menuTittle: "TIMESHEET",
   },
   {

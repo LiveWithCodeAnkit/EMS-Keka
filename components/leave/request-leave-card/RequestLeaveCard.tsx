@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
-import Select from "react-select";
-import makeAnimated from "react-select/animated";
 import { CiTimer } from "react-icons/ci";
 import { differenceInDays } from "date-fns";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -13,22 +11,21 @@ import {
   FormControl,
   FormErrorMessage,
   FormLabel,
-  Input,
-  Select as SelectInput,
   Tag,
   TagLabel,
   Text,
-  Textarea,
   useColorMode,
 } from "@chakra-ui/react";
+import { useLeave } from "../hook";
+import { TextareaControl } from "@atoms/Textarea";
+import { SelectControl, SelectGroup } from "@atoms/Select";
 import { leaveTypesList, leaveApprover } from "../constants/leaveList";
-import { useLeave } from "../hook/useLeave";
 
 const RequestLeaveCard = ({ onClose }) => {
   const { colorMode } = useColorMode();
   const isDark = colorMode === "dark";
-  const animatedComponents = makeAnimated();
-  const { initialValues, schema, handleLeave } = useLeave({ onClose });
+
+  const { initialValues, schema, submit } = useLeave({ onClose });
   const { handleSubmit, control, formState } = useForm({
     resolver: yupResolver(schema),
   });
@@ -46,14 +43,13 @@ const RequestLeaveCard = ({ onClose }) => {
     }
   };
 
+  //date
   const [startDate, setStartDate] = useState<Date | null>(null);
-
   const [endDate, setEndDate] = useState<Date | null>(null);
 
   const handleStartDateChange = (date: Date | null) => {
     setStartDate(date);
   };
-
   const handleEndDateChange = (date: Date | null) => {
     setEndDate(date);
   };
@@ -66,9 +62,10 @@ const RequestLeaveCard = ({ onClose }) => {
     return 0;
   };
 
+  //date
   return (
     <>
-      <form onSubmit={handleSubmit(handleLeave)}>
+      <form onSubmit={handleSubmit(submit)}>
         <Box
           as="div"
           sx={{
@@ -162,27 +159,17 @@ const RequestLeaveCard = ({ onClose }) => {
               </FormControl>
             </Box>
           </Card>
-
-          <FormControl isInvalid={!!errors.typeOfLeave}>
-            <FormLabel htmlFor="typeOfLeave">
-              Select type of leave you want to apply
-            </FormLabel>
-            <Controller
-              name="typeOfLeave"
-              control={control}
-              defaultValue={initialValues.typeOfLeave}
-              render={({ field }) => (
-                <SelectInput {...field} placeholder="Select" name="typeOfLeave">
-                  {leaveTypesList.map((data, index) => (
-                    <option key={index}>{data.leaveType}</option>
-                  ))}
-                </SelectInput>
-              )}
-            />
-            <FormErrorMessage>
-              {errors.typeOfLeave && errors.typeOfLeave.message}
-            </FormErrorMessage>
-          </FormControl>
+          <SelectControl
+            label="Select type of leave you want to apply"
+            name="typeOfLeave"
+            control={control}
+            defaultValue={initialValues.typeOfLeave}
+            options={leaveTypesList.map((data) => ({
+              value: data.leaveType,
+              label: data.leaveType,
+            }))}
+            errors={errors}
+          />
           {!startDate ? (
             ""
           ) : (
@@ -231,32 +218,31 @@ const RequestLeaveCard = ({ onClose }) => {
                   gap: "1rem",
                 }}
               >
-                <FormControl>
-                  <FormLabel>
-                    From {startDate && startDate.toLocaleDateString()}
-                  </FormLabel>
-                  <SelectInput placeholder="Select">
-                    <option>First half</option>
-                    <option>Secound half</option>
-                  </SelectInput>
-                </FormControl>
+                <SelectControl
+                  label={`From ${
+                    startDate ? startDate.toLocaleDateString() : ""
+                  }`}
+                  name="customFromDateStatus"
+                  control={control}
+                  defaultValue={initialValues.customFromDateStatus}
+                  options={[
+                    { value: "First half", label: "First half" },
+                    { value: "Secound half", label: "Secound half" },
+                  ]}
+                  errors={errors}
+                />
 
-                <FormControl
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "end",
-                    alignItems: "end",
-                  }}
-                >
-                  <FormLabel>
-                    To {endDate && endDate.toLocaleDateString()}{" "}
-                  </FormLabel>
-                  <SelectInput placeholder="Select">
-                    <option>First half</option>
-                    <option>Secound half</option>
-                  </SelectInput>
-                </FormControl>
+                <SelectControl
+                  label={`To ${endDate ? endDate.toLocaleDateString() : ""}`}
+                  name="customToDateStatus"
+                  control={control}
+                  defaultValue={initialValues.customToDateStatus}
+                  options={[
+                    { value: "First half", label: "First half" },
+                    { value: "Secound half", label: "Secound half" },
+                  ]}
+                  errors={errors}
+                />
               </Box>
             </Card>
           )}
@@ -279,71 +265,23 @@ const RequestLeaveCard = ({ onClose }) => {
               </Text>
             </Box>
           )}
+          <TextareaControl
+            label="Note"
+            name="reasonForLeave"
+            control={control}
+            defaultValue={initialValues.reasonForLeave}
+            errors={errors}
+          />
 
-          {/*custom date */}
-
-          <FormControl isInvalid={!!errors.reasonForLeave} w="full">
-            <FormLabel>Note</FormLabel>
-
-            <Controller
-              name="reasonForLeave"
-              control={control}
-              defaultValue={initialValues.reasonForLeave}
-              render={({ field }) => (
-                <Input
-                  {...field}
-                  as={Textarea}
-                  type="Textarea"
-                  placeholder="Type Here"
-                  size="md"
-                  name="reasonForLeave"
-                />
-              )}
-            />
-            <FormErrorMessage>
-              {errors.reasonForLeave && errors.reasonForLeave.message}
-            </FormErrorMessage>
-          </FormControl>
-
-          <FormControl w="full" isInvalid={!!errors.notifyPersons}>
-            <FormLabel>Notify</FormLabel>
-
-            <Controller
-              name="notifyPersons"
-              control={control}
-              defaultValue={[]}
-              render={({ field }) => (
-                <Select
-                  {...field}
-                  closeMenuOnSelect={false}
-                  defaultValue={initialValues.notifyPersons}
-                  components={animatedComponents}
-                  isMulti
-                  options={leaveApprover.map((value) => ({
-                    value,
-                    label: value,
-                  }))}
-                  onChange={(selected) => {
-                    field.onChange(selected);
-                  }}
-                  styles={{
-                    control: (baseStyles, state) => ({
-                      ...baseStyles,
-                      background: isDark ? "#2d3748" : "",
-                    }),
-                    option: (base) => ({
-                      ...base,
-                      background: isDark ? "#2d3748" : "",
-                      color: isDark ? "white" : "",
-                    }),
-                  }}
-                />
-              )}
-            />
-            <FormErrorMessage>
-              {errors.notifyPersons && errors.notifyPersons.message}
-            </FormErrorMessage>
-          </FormControl>
+          <SelectGroup
+            label="Notify"
+            name="notifyPersons"
+            control={control}
+            options={leaveApprover}
+            initialValues={initialValues.notifyPersons}
+            isDark={isDark}
+            errors={errors}
+          />
         </Box>
         <Box
           sx={{

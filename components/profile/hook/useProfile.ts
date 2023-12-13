@@ -1,13 +1,16 @@
-import { useToastMessages } from "../../common-hooks/useToastMessages";
-import { userSchema } from "../schema/userSchema";
+import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { userSchema } from "../schema";
+import { createProfile } from "@store/slices/userSlice";
+import { useToastMessages } from "@common-hooks/useToastMessages";
 
-interface UserProfile {
+interface Props {
   firstName: string;
   middleName: string;
   lastName: string;
   displayName: string;
   gender: string;
-  dob: Date; 
+  dob: string;
   maritalStatus: string;
   bloodGroup: string;
   physicalStatus: string;
@@ -18,29 +21,48 @@ export interface UseProfileProps {
 }
 
 export const useProfile = ({ onClose }: UseProfileProps) => {
+  const form = useForm();
+  const dispatch = useDispatch();
+  const userProfile = useSelector((state: { user: Props }) => state.user);
+
   const { Success } = useToastMessages();
 
-  const initialValues: UserProfile = {
+  const initialValues: Props & { isLoading?: boolean } = {
     firstName: "",
     middleName: "",
     lastName: "",
     displayName: "",
     gender: "",
-    dob: new Date("2003-01-01"), 
+    dob: "",
     maritalStatus: "",
     bloodGroup: "",
     physicalStatus: "",
+   
   };
 
-  const handleProfile = (values: UserProfile) => {
-    console.log("handle handleProfile function:=", values);
-    Success("Profile Saved", "Info Update..");
-    onClose();
+  const handleProfile = async (values: Props) => {
+    try {
+      const action = createProfile({
+        ...values,
+        isLoading: true,
+      }) as ReturnType<typeof createProfile>;
+      // @ts-ignore
+      const resultAction = await dispatch(action);
+      console.log(resultAction);
+
+      if (createProfile.fulfilled.match(resultAction)) {
+        Success("Profile Saved", "Info Update..");
+        form.reset();
+        onClose();
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return {
     initialValues,
     schema: userSchema,
-    handleProfile,
+    submit: handleProfile,
   };
 };

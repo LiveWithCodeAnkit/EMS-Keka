@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Badge,
   Box,
@@ -8,7 +9,6 @@ import {
   Link,
   Text,
 } from "@chakra-ui/react";
-import React from "react";
 import { repotingTeamInfo } from "./constants/repotingTeamInfo";
 
 const ReaportingTeam = () => {

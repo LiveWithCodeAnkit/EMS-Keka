@@ -1,6 +1,6 @@
 import { UseLeaveProps } from "./useLeave";
-import { commonSchema } from "../schema/leaveSchema";
-import { useToastMessages } from "../../common-hooks/useToastMessages";
+import { useToastMessages } from "@common-hooks/useToastMessages";
+import { commonSchema } from "../schema";
 
 interface LeaveProps {
   empName: string;
@@ -28,6 +28,6 @@ export const useCancelLeave = ({ onClose }: UseLeaveProps) => {
   return {
     initialValues,
     schema: commonSchema,
-    handleCancelLeave,
+    submit:handleCancelLeave,
   };
 };

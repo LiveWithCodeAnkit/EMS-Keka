@@ -1,12 +1,11 @@
 import { UseLeaveProps } from "./useLeave";
-import { compensatorySchema } from "../schema/leaveSchema";
-import { useToastMessages } from "../../common-hooks/useToastMessages";
+import { useToastMessages } from "@common-hooks/useToastMessages";
+import { compensatorySchema } from "../schema";
 
 interface LeaveProps {
-    dateRange: string;
-    leaveNote: string;
-  }
-  
+  dateRange: string;
+  leaveNote: string;
+}
 
 export const useCompensatory = ({ onClose }: UseLeaveProps) => {
   const { Success } = useToastMessages();
@@ -23,6 +22,6 @@ export const useCompensatory = ({ onClose }: UseLeaveProps) => {
   return {
     initialValues,
     schema: compensatorySchema,
-    handleCompensatoryLeave,
+    submit: handleCompensatoryLeave,
   };
 };

@@ -1,47 +1,76 @@
-import { Box, Button, Card, FormLabel, Input } from "@chakra-ui/react";
 import React from "react";
-
+import { CiCircleAlert } from "react-icons/ci";
+import {
+  Box,
+  Button,
+  Text,
+  useDisclosure,
+  Drawer,
+  DrawerBody,
+  DrawerCloseButton,
+  DrawerContent,
+  DrawerHeader,
+  DrawerOverlay,
+} from "@chakra-ui/react";
+import TimesheetLogs from "./TimesheetLogs";
+import AddTimesheet from "./add-timesheet/AddTimesheet";
 
 const Timesheet = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
-      <Card
+      <Box
+        as="div"
         sx={{
           display: "flex",
           flexDirection: "column",
-          gap: "2rem",
-          padding: "2rem",
+          gap: "0.5rem",
+          mt: "3rem",
         }}
       >
-        <Box>
-          <FormLabel>Recipients</FormLabel>
-          <Input type="email" />
-        </Box>
-        <Box>
-          <FormLabel>Subject</FormLabel>
-          <Input name="subject" fontWeight="bold" />
-        </Box>
-
-        {/* <Editor
-          toolbarClassName="toolbarClassName"
-          wrapperClassName="wrapperClassName"
-          editorClassName="editorClassName"
-          wrapperStyle={{ border: "1px solid black" }}
-        /> */}
         <Box
+          as="div"
           sx={{
             display: "flex",
-            gap: "2rem",
+            justifyContent: "space-between",
+            alignItems: "center",
           }}
         >
-          <Button colorScheme="teal" variant="outline">
-            Submit
-          </Button>
-          <Button colorScheme="teal" variant="outline">
-            cancel
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "start",
+              alignItems: "center",
+              gap: "0.5rem",
+            }}
+          >
+            <Text fontWeight="semibold" fontSize="22px">
+              Timesheet Logs
+            </Text>
+            <CiCircleAlert fontSize="28px" />
+          </Box>
+          <Button
+            colorScheme="twitter"
+            onClick={() => {
+              onOpen();
+            }}
+          >
+            Add Timesheet
           </Button>
         </Box>
-      </Card>
+        <TimesheetLogs />
+      </Box>
+
+      <Drawer isOpen={isOpen} placement="right" onClose={onClose} size="xl">
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerCloseButton />
+          <DrawerHeader bg="gray.500">Timesheet Request</DrawerHeader>
+          <DrawerBody>
+            <AddTimesheet onClose={onClose} />
+          </DrawerBody>
+        </DrawerContent>
+      </Drawer>
     </>
   );
 };

@@ -1,20 +1,12 @@
 import React from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm, Controller } from "react-hook-form";
-import {
-  Box,
-  Button,
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
-  Input,
-  Text,
-  Textarea,
-} from "@chakra-ui/react";
-import { useCancelLeave } from "../hook/useCancelLeave";
+import { useForm } from "react-hook-form";
+import { Box, Button, Text } from "@chakra-ui/react";
+import { TextareaControl } from "@atoms/Textarea"; 
+import { useCancelLeave } from "../hook";
 
 const CancelLeave = ({ onClose }) => {
-  const { initialValues, schema, handleCancelLeave } = useCancelLeave({
+  const { initialValues, schema, submit } = useCancelLeave({
     onClose,
   });
   const {
@@ -24,7 +16,7 @@ const CancelLeave = ({ onClose }) => {
   } = useForm({ resolver: yupResolver(schema) });
   return (
     <>
-      <form onSubmit={handleSubmit(handleCancelLeave)}>
+      <form onSubmit={handleSubmit(submit)}>
         <Box
           as="div"
           sx={{
@@ -73,28 +65,15 @@ const CancelLeave = ({ onClose }) => {
           </Box>
 
           {/* ///cancel reson */}
-          <FormControl isInvalid={!!errors.leaveNote}>
-            {" "}
-            <FormLabel>Note</FormLabel>
-            <Controller
-              name="leaveNote"
-              control={control}
-              defaultValue={initialValues.leaveNote}
-              render={({ field }) => (
-                <Input
-                  as={Textarea}
-                  type="Textarea"
-                  placeholder="Type Here"
-                  size="md"
-                  name="leaveNote"
-                  {...field}
-                />
-              )}
-            />
-            <FormErrorMessage>
-              {errors.leaveNote && errors.leaveNote.message}
-            </FormErrorMessage>
-          </FormControl>
+
+          <TextareaControl
+            label="Note"
+            name="leaveNote"
+            control={control}
+            defaultValue={initialValues.leaveNote}
+            errors={errors}
+          />
+
           {/* ///cancel reson */}
 
           <Box

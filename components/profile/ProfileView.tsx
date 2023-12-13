@@ -1,5 +1,5 @@
-import { Box, Card, Heading } from "@chakra-ui/react";
 import React from "react";
+import { Box, Card, Heading } from "@chakra-ui/react";
 import ProfileViewCard from "./common-ui/ProfileViewCard";
 import { profilePrimaryInfo } from "./constants/profileInfo";
 

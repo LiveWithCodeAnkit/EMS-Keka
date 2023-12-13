@@ -11,15 +11,14 @@ import {
   Button,
   FormControl,
   FormErrorMessage,
-  FormLabel,
-  Input,
   Text,
   useColorMode,
 } from "@chakra-ui/react";
-import { useDocument } from "../hook/useDocument";
+import { useDocument } from "../hook";
+import { InputControl } from "@atoms/TextInput";
 
 const AddDocument = ({ tittle, onClose }) => {
-  const { initialValues, schema, handleDocument } = useDocument({ onClose });
+  const { initialValues, schema, submit } = useDocument({ onClose });
   const { handleSubmit, control, formState } = useForm({
     resolver: yupResolver(schema),
   });
@@ -38,7 +37,7 @@ const AddDocument = ({ tittle, onClose }) => {
 
   return (
     <>
-      <form onSubmit={handleSubmit(handleDocument)}>
+      <form onSubmit={handleSubmit(submit)}>
         <Box
           as="div"
           sx={{
@@ -111,49 +110,23 @@ const AddDocument = ({ tittle, onClose }) => {
                 p: "1rem",
               }}
             >
-              <FormControl isInvalid={!!errors.documentNumber}>
-                <FormLabel htmlFor="documentNumber">{tittle}</FormLabel>
-                <Controller
-                  name="documentNumber"
-                  control={control}
-                  defaultValue={initialValues.documentNumber}
-                  render={({ field }) => (
-                    <Input
-                      {...field}
-                      name="documentNumber"
-                      type="Textarea"
-                      placeholder="Type Here"
-                    />
-                  )}
-                />
-                <FormErrorMessage>
-                  {errors.documentNumber && errors.documentNumber.message}
-                </FormErrorMessage>
-              </FormControl>
-              <FormControl isInvalid={!!errors.dob}>
-                <FormLabel htmlFor="dob">Date of Birth</FormLabel>
-                <Controller
-                  name="dob"
-                  control={control}
-                  defaultValue={initialValues.dob}
-                  render={({ field }) => (
-                    <Input
-                      {...field}
-                      type="date"
-                      placeholder=""
-                      name="dob"
-                      value={
-                        field.value instanceof Date
-                          ? field.value.toISOString().split("T")[0]
-                          : field.value
-                      }
-                    />
-                  )}
-                />
-                <FormErrorMessage>
-                  {errors.dob && errors.dob.message}
-                </FormErrorMessage>
-              </FormControl>
+              <InputControl
+                label={tittle}
+                name="documentNumber"
+                control={control}
+                initialValues={initialValues.documentNumber}
+                errors={errors}
+                placeholder="e.g., 123456789"
+              />
+
+              <InputControl
+                label="Date Of Birth"
+                name="dob"
+                control={control}
+                initialValues={initialValues.dob}
+                errors={errors}
+                type="date"
+              />
             </Box>
             <Box
               as="div"
@@ -165,44 +138,23 @@ const AddDocument = ({ tittle, onClose }) => {
                 p: "1rem",
               }}
             >
-              <FormControl isInvalid={!!errors.personName}>
-                <FormLabel htmlFor="personName">Name</FormLabel>
-                <Controller
-                  name="personName"
-                  control={control}
-                  defaultValue={initialValues.personName}
-                  render={({ field }) => (
-                    <Input
-                      {...field}
-                      name="personName"
-                      placeholder="Type Here"
-                    />
-                  )}
-                />
-                <FormErrorMessage>
-                  {errors.personName && errors.personName.message}
-                </FormErrorMessage>
-              </FormControl>
-              <FormControl isInvalid={!!errors.parrentName}>
-                <FormLabel htmlFor="parrentName">
-                  Name of Father / Mother
-                </FormLabel>
-                <Controller
-                  name="parrentName"
-                  control={control}
-                  defaultValue={initialValues.parrentName}
-                  render={({ field }) => (
-                    <Input
-                      {...field}
-                      name="parrentName"
-                      placeholder="Type Here"
-                    />
-                  )}
-                />
-                <FormErrorMessage>
-                  {errors.parrentName && errors.parrentName.message}
-                </FormErrorMessage>
-              </FormControl>
+              <InputControl
+                label="Name"
+                name="personName"
+                control={control}
+                initialValues={initialValues.personName}
+                errors={errors}
+                placeholder="Full name"
+              />
+
+              <InputControl
+                label="Name of Father / Mother"
+                name="parrentName"
+                control={control}
+                initialValues={initialValues.parrentName}
+                errors={errors}
+                placeholder="Type Here"
+              />
             </Box>
             <Box
               as="div"
@@ -214,30 +166,14 @@ const AddDocument = ({ tittle, onClose }) => {
                 p: "1rem",
               }}
             >
-              <FormControl isInvalid={!!errors.dateOfExpire}>
-                <FormLabel htmlFor="dateOfExpire">Expire on</FormLabel>
-                <Controller
-                  name="dateOfExpire"
-                  control={control}
-                  defaultValue={initialValues.dateOfExpire}
-                  render={({ field }) => (
-                    <Input
-                      {...field}
-                      name="dateOfExpire"
-                      type="date"
-                      placeholder=""
-                      value={
-                        field.value instanceof Date
-                          ? field.value.toISOString().split("T")[0]
-                          : field.value
-                      }
-                    />
-                  )}
-                />
-                <FormErrorMessage>
-                  {errors.dateOfExpire && errors.dateOfExpire.message}
-                </FormErrorMessage>
-              </FormControl>
+              <InputControl
+                label="Expire on"
+                name="dateOfExpire"
+                control={control}
+                initialValues={initialValues.dateOfExpire}
+                errors={errors}
+                type="date"
+              />
             </Box>
             <Box
               sx={{

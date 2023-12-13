@@ -38,14 +38,13 @@ import { assetInfo } from "./constants/assetData";
 import RequestReplacement from "./request_replace/RequestReplacement";
 
 const AssetsTableView = () => {
-  
-const [selectedAsset, setSelectedAsset] = useState(null);
+  const [selectedAsset, setSelectedAsset] = useState(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const itemsPerPage = 3;
   const totalPages = Math.ceil(assetInfo.length / itemsPerPage);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const handlePageChange = (newPage:any) => {
+  const handlePageChange = (newPage: any) => {
     setCurrentPage(newPage);
   };
 
@@ -188,14 +187,8 @@ const [selectedAsset, setSelectedAsset] = useState(null);
           <DrawerCloseButton />
           <DrawerHeader bg="gray.500">Replacement Request</DrawerHeader>
           <DrawerBody>
-          <RequestReplacement selectedAsset={selectedAsset} />
+            <RequestReplacement selectedAsset={selectedAsset} onClose={onClose}/>
           </DrawerBody>
-          <DrawerFooter>
-            <Button variant="outline" mr={3} onClick={onClose}>
-              Cancel
-            </Button>
-            <Button colorScheme="blue">Save</Button>
-          </DrawerFooter>
         </DrawerContent>
       </Drawer>
     </>

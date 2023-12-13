@@ -1,9 +1,8 @@
-import { useToastMessages } from "../../common-hooks/useToastMessages";
+import { useToastMessages } from "@common-hooks/useToastMessages";
 
 interface AboutInfo {
   aboutInfo: string;
 }
-
 interface AboutJob {
   aboutJob: string;
 }

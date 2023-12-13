@@ -1,0 +1,1 @@
+export { useAbout } from "./useAbout";

@@ -4,22 +4,13 @@ import { BiMobile } from "react-icons/bi";
 import { AiOutlineSkype } from "react-icons/ai";
 import { FaLinkedinIn } from "react-icons/fa";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm, Controller } from "react-hook-form";
-import {
-  Box,
-  Button,
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
-  Icon,
-  Input,
-  InputGroup,
-  InputLeftElement,
-} from "@chakra-ui/react";
-import { useProfileContact } from "../hook/useProfileContact";
+import { useForm } from "react-hook-form";
+import { Box, Button } from "@chakra-ui/react";
+import { useProfileContact } from "../hook";
+import { InputGroupControl, InputControl } from "@atoms/TextInput";
 
 const UserContactForm = ({ onClose }) => {
-  const { initialValues, schema, handleContact } = useProfileContact({
+  const { initialValues, schema, submit } = useProfileContact({
     onClose,
   });
 
@@ -31,7 +22,7 @@ const UserContactForm = ({ onClose }) => {
 
   return (
     <>
-      <form onSubmit={handleSubmit(handleContact)}>
+      <form onSubmit={handleSubmit(submit)}>
         <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
           <Box
             as="div"
@@ -42,43 +33,25 @@ const UserContactForm = ({ onClose }) => {
               gap: "1rem",
             }}
           >
-            <FormControl isInvalid={!!errors.workEmail}>
-              <FormLabel>Work Email</FormLabel>
-              <Controller
-                name="workEmail"
-                control={control}
-                defaultValue={initialValues.workEmail}
-                render={({ field }) => (
-                  <Input
-                    {...field}
-                    placeholder="xyz@gmail.com"
-                    name="workEmail"
-                  />
-                )}
-              />
-              <FormErrorMessage>
-                {errors.workEmail && errors.workEmail.message}
-              </FormErrorMessage>
-            </FormControl>
-            <FormControl isInvalid={!!errors.personalEmail}>
-              <FormLabel>Personal Email</FormLabel>
+            <InputControl
+              label="Work Email"
+              name="workEmail"
+              control={control}
+              initialValues={initialValues.workEmail}
+              errors={errors}
+              placeholder="xyz@gmail.com"
+              type="text"
+            />
 
-              <Controller
-                name="personalEmail"
-                control={control}
-                defaultValue={initialValues.personalEmail}
-                render={({ field }) => (
-                  <Input
-                    {...field}
-                    name="personalEmail"
-                    placeholder="abc@gmail.com"
-                  />
-                )}
-              />
-              <FormErrorMessage>
-                {errors.personalEmail && errors.personalEmail.message}
-              </FormErrorMessage>
-            </FormControl>
+            <InputControl
+              label="Personal Email"
+              name="personalEmail"
+              control={control}
+              initialValues={initialValues.personalEmail}
+              errors={errors}
+              placeholder="abc@gmail.com"
+              type="text"
+            />
           </Box>
           <Box
             as="div"
@@ -89,55 +62,27 @@ const UserContactForm = ({ onClose }) => {
               gap: "1rem",
             }}
           >
-            <FormControl isInvalid={!!errors.workPhone}>
-              <FormLabel>Work Phone</FormLabel>
-              <Controller
-                name="workPhone"
-                control={control}
-                defaultValue=""
-                render={({ field }) => (
-                  <InputGroup>
-                    <InputLeftElement pointerEvents="none">
-                      <Icon as={GrPhone} color="gray.300" />
-                    </InputLeftElement>
-                    <Input
-                      {...field}
-                      name="workPhone"
-                      type="tel"
-                      placeholder="Work number"
-                    />
-                  </InputGroup>
-                )}
-              />
-              <FormErrorMessage>
-                {errors.workPhone && errors.workPhone.message}
-              </FormErrorMessage>
-            </FormControl>
-            <FormControl isInvalid={!!errors.mobilePhone}>
-              <FormLabel>Mobile Phone</FormLabel>
+            <InputGroupControl
+              label="Work Phone"
+              name="workPhone"
+              control={control}
+              initialValues={initialValues.workPhone}
+              errors={errors}
+              placeholder="Work number"
+              type="tel"
+              icon={GrPhone}
+            />
 
-              <Controller
-                name="mobilePhone"
-                control={control}
-                defaultValue=""
-                render={({ field }) => (
-                  <InputGroup>
-                    <InputLeftElement pointerEvents="none">
-                      <Icon as={BiMobile} color="gray.300" />
-                    </InputLeftElement>
-                    <Input
-                      {...field}
-                      name="mobilePhone"
-                      type="tel"
-                      placeholder="Mobile number"
-                    />
-                  </InputGroup>
-                )}
-              />
-              <FormErrorMessage>
-                {errors.mobilePhone && errors.mobilePhone.message}
-              </FormErrorMessage>
-            </FormControl>
+            <InputGroupControl
+              label="Mobile Phone"
+              name="mobilePhone"
+              control={control}
+              initialValues={initialValues.mobilePhone}
+              errors={errors}
+              placeholder="Mobile number"
+              type="tel"
+              icon={BiMobile}
+            />
           </Box>
           <Box
             as="div"
@@ -148,56 +93,27 @@ const UserContactForm = ({ onClose }) => {
               gap: "1rem",
             }}
           >
-            <FormControl isInvalid={!!errors.residencePhone}>
-              <FormLabel>Residence Phone</FormLabel>
+            <InputGroupControl
+              label="Residence Phone"
+              name="residencePhone"
+              control={control}
+              initialValues={initialValues.residencePhone}
+              errors={errors}
+              placeholder="Residence number"
+              type="tel"
+              icon={GrPhone}
+            />
 
-              <Controller
-                name="residencePhone"
-                control={control}
-                defaultValue=""
-                render={({ field }) => (
-                  <InputGroup>
-                    <InputLeftElement pointerEvents="none">
-                      <Icon as={GrPhone} color="gray.300" />
-                    </InputLeftElement>
-                    <Input
-                      {...field}
-                      name="residencePhone"
-                      type="tel"
-                      placeholder="Residence number"
-                    />
-                  </InputGroup>
-                )}
-              />
-              <FormErrorMessage>
-                {errors.residencePhone && errors.residencePhone.message}
-              </FormErrorMessage>
-            </FormControl>
-
-            <FormControl isInvalid={!!errors.skypeNumber}>
-              <FormLabel>Skype</FormLabel>
-              <Controller
-                name="skypeNumber"
-                control={control}
-                defaultValue=""
-                render={({ field }) => (
-                  <InputGroup>
-                    <InputLeftElement pointerEvents="none">
-                      <Icon as={AiOutlineSkype} color="gray.300" />
-                    </InputLeftElement>
-                    <Input
-                      {...field}
-                      name="skypeNumber"
-                      type="tel"
-                      placeholder="Skype number"
-                    />
-                  </InputGroup>
-                )}
-              />
-              <FormErrorMessage>
-                {errors.skypeNumber && errors.skypeNumber.message}
-              </FormErrorMessage>
-            </FormControl>
+            <InputGroupControl
+              label="Skype"
+              name="skypeNumber"
+              control={control}
+              initialValues={initialValues.skypeNumber}
+              errors={errors}
+              placeholder="Skype number"
+              type="tel"
+              icon={AiOutlineSkype}
+            />
           </Box>
           <Box
             as="div"
@@ -208,31 +124,16 @@ const UserContactForm = ({ onClose }) => {
               gap: "1rem",
             }}
           >
-            <FormControl isInvalid={!!errors.linkedinUrl}>
-              <FormLabel>Linkdin</FormLabel>
-
-              <Controller
-                name="linkedinUrl"
-                control={control}
-                defaultValue=""
-                render={({ field }) => (
-                  <InputGroup>
-                    <InputLeftElement pointerEvents="none">
-                      <Icon as={FaLinkedinIn} color="gray.300" />
-                    </InputLeftElement>
-                    <Input
-                      {...field}
-                      name="linkedinUrl"
-                      type="tel"
-                      placeholder="Linkdin URL"
-                    />
-                  </InputGroup>
-                )}
-              />
-              <FormErrorMessage>
-                {errors.linkedinUrl && errors.linkedinUrl.message}
-              </FormErrorMessage>
-            </FormControl>
+            <InputGroupControl
+              label="Linkdin"
+              name="linkedinUrl"
+              control={control}
+              initialValues={initialValues.linkedinUrl}
+              errors={errors}
+              placeholder="Linkdin URL"
+              type="tel"
+              icon={FaLinkedinIn}
+            />
           </Box>
           <Box
             as="div"

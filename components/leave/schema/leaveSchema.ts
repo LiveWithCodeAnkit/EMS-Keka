@@ -16,17 +16,3 @@ export const leaveSchema = Yup.object().shape({
   customFromDateStatus: Yup.string(),
   customToDateStatus: Yup.string(),
 });
-
-export const commonSchema = Yup.object().shape({
-  leaveNote: Yup.string()
-    .required("Description required")
-    .min(50, "Description must be at least 50 characters long"),
-});
-
-export const compensatorySchema = commonSchema.concat(
-  Yup.object().shape({
-    dateRange: Yup.array()
-      .min(1, "Select at least one date")
-      .required("Required"),
-  })
-);

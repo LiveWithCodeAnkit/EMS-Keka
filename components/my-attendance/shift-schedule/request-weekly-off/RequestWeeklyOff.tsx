@@ -1,25 +1,31 @@
 import React, { useState } from "react";
-import DatePicker from "react-datepicker";
-import Select from "react-select";
-import makeAnimated from "react-select/animated";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm, Controller } from "react-hook-form";
 import { differenceInDays } from "date-fns";
+import DatePicker from "react-datepicker";
 import {
   Box,
   Button,
   Card,
   FormControl,
+  FormErrorMessage,
   FormLabel,
-  Input,
   Tag,
   TagLabel,
-  Text,
-  Textarea,
   useColorMode,
 } from "@chakra-ui/react";
+import { SelectGroup } from "@atoms/Select";
+import { TextareaControl } from "@atoms/Textarea";
+import { useWeeklyOff } from "components/my-attendance/hook";
 import { leaveApprover } from "../../../leave/constants/leaveList";
 
 const RequestWeeklyOff = ({ onClose }) => {
-  const animatedComponents = makeAnimated();
+  const { initialValues, schema, submit } = useWeeklyOff();
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm({ resolver: yupResolver(schema) });
 
   const { colorMode } = useColorMode();
   const isDark = colorMode === "dark";
@@ -42,124 +48,139 @@ const RequestWeeklyOff = ({ onClose }) => {
   };
   //date calucation
   return (
-    <Box
-      as="div"
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "start",
-        alignItems: "start",
-        gap: "0.9rem",
-        p: "1rem",
-      }}
-    >
-      <Card p="0.5rem">
+    <>
+      <form onSubmit={handleSubmit(submit)}>
         <Box
           as="div"
           sx={{
             display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            gap: "1rem",
+            flexDirection: "column",
+            justifyContent: "start",
+            alignItems: "start",
+            gap: "0.9rem",
+            p: "1rem",
           }}
         >
-          <FormControl>
-            <FormLabel htmlFor="fromDate">From</FormLabel>
-
-            <DatePicker
-              name="fromDate"
-              dateFormat="dd MMMM, yyyy"
-              placeholderText="Select Date"
-              onChange={(date) => {
-                handleStartDateChange(date);
+          <Card p="0.5rem">
+            <Box
+              as="div"
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                gap: "1rem",
               }}
-              selected={startDate}
-              className="date_Time_picker"
-            />
-          </FormControl>
-          <Tag size="lg" variant="subtle" key="lg" colorScheme="gray" w="50%">
-            <TagLabel>{calculateDays()} days</TagLabel>
-          </Tag>
+            >
+              <FormControl isInvalid={!!errors.fromDate}>
+                <FormLabel htmlFor="fromDate">From</FormLabel>
+                <Controller
+                  name="fromDate"
+                  control={control}
+                  defaultValue={initialValues.fromDate}
+                  render={({ field }) => (
+                    <>
+                      <DatePicker
+                        name="fromDate"
+                        dateFormat="dd MMMM, yyyy"
+                        placeholderText="Select Date"
+                        onChange={(date) => {
+                          field.onChange(date);
+                          handleStartDateChange(date);
+                        }}
+                        selected={field.value}
+                        className="date_Time_picker"
+                      />
+                    </>
+                  )}
+                />
+                <FormErrorMessage>
+                  {errors.fromDate && errors.fromDate.message}
+                </FormErrorMessage>
+              </FormControl>
+              <Tag
+                size="lg"
+                variant="subtle"
+                key="lg"
+                colorScheme="gray"
+                w="50%"
+              >
+                <TagLabel>{calculateDays()} days</TagLabel>
+              </Tag>
 
-          <FormControl
+              <FormControl
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "end",
+                  alignItems: "end",
+                }}
+                isInvalid={!!errors.toDate}
+              >
+                <FormLabel htmlFor="toDate">To</FormLabel>
+                <Controller
+                  name="toDate"
+                  control={control}
+                  defaultValue={initialValues.toDate}
+                  render={({ field }) => (
+                    <>
+                      <DatePicker
+                        name="toDate"
+                        dateFormat="dd MMMM, yyyy"
+                        placeholderText="Select Date"
+                        onChange={(date) => {
+                          field.onChange(date);
+                          handleEndDateChange(date);
+                        }}
+                        selected={field.value}
+                        className="date_Time_picker"
+                      />
+                    </>
+                  )}
+                />
+                <FormErrorMessage>
+                  {errors.toDate && errors.toDate.message}
+                </FormErrorMessage>
+              </FormControl>
+            </Box>
+          </Card>
+
+          <TextareaControl
+            label="Reason"
+            name="reasonForWeeklyOff"
+            control={control}
+            defaultValue={initialValues.reasonForWeeklyOff}
+            errors={errors}
+          />
+
+          <SelectGroup
+            label="Notify"
+            name="notifyPersons"
+            control={control}
+            options={leaveApprover}
+            initialValues={initialValues.notifyPersons}
+            isDark={isDark}
+            errors={errors}
+          />
+
+          <Box
             sx={{
               display: "flex",
-              flexDirection: "column",
               justifyContent: "end",
-              alignItems: "end",
+              alignItems: "center",
+              gap: "1rem",
+              w: "full",
             }}
           >
-            <FormLabel htmlFor="toDate">To</FormLabel>
-
-            <DatePicker
-              name="toDate"
-              dateFormat="dd MMMM, yyyy"
-              placeholderText="Select Date"
-              onChange={(date) => {
-                handleEndDateChange(date);
-              }}
-              selected={endDate}
-              className="date_Time_picker"
-            />
-          </FormControl>
+            <Button colorScheme="gray" onClick={onClose}>
+              Cancel
+            </Button>
+            <Button colorScheme="blue" type="submit">
+              Request
+            </Button>
+          </Box>
         </Box>
-      </Card>
-
-      <FormControl w="full">
-        <FormLabel>Reason</FormLabel>
-        <Input
-          as={Textarea}
-          type="Textarea"
-          placeholder="Please enter note for applying overtime"
-          size="md"
-          name="reasonForLeave"
-        />
-      </FormControl>
-      <FormControl w="full">
-        <FormLabel>Notify</FormLabel>
-        <Select
-          closeMenuOnSelect={false}
-          placeholder="Search Employee"
-          components={animatedComponents}
-          isMulti
-          options={leaveApprover.map((value) => ({
-            value,
-            label: value,
-          }))}
-          styles={{
-            control: (baseStyles, state) => ({
-              ...baseStyles,
-              background: isDark ? "#2d3748" : "",
-            }),
-            option: (base) => ({
-              ...base,
-              background: isDark ? "#2d3748" : "",
-              color: isDark ? "white" : "",
-            }),
-          }}
-        />
-        <Text fontSize="14px">
-          Note: These employees will be notified through email when your
-          overtime request is approved.
-        </Text>
-      </FormControl>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "end",
-          alignItems: "center",
-          gap: "1rem",
-          w: "full",
-        }}
-      >
-        <Button colorScheme="gray" onClick={onClose}>
-          Cancel
-        </Button>
-        <Button colorScheme="blue" type="submit">
-          Request
-        </Button>
-      </Box>
-    </Box>
+      </form>
+    </>
   );
 };
 

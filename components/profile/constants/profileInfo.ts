@@ -130,3 +130,38 @@ export const userProfileMenuList = [
     hasBadge: false,
   },
 ];
+
+export const bloodGroups = [
+  {
+    id: 1,
+    bloodGroupName: "A+",
+  },
+  {
+    id: 2,
+    bloodGroupName: "B+",
+  },
+  {
+    id: 3,
+    bloodGroupName: "AB+",
+  },
+  {
+    id: 4,
+    bloodGroupName: "O+",
+  },
+  {
+    id: 5,
+    bloodGroupName: "A-",
+  },
+  {
+    id: 6,
+    bloodGroupName: "B-",
+  },
+  {
+    id: 7,
+    bloodGroupName: "AB-",
+  },
+  {
+    id: 8,
+    bloodGroupName: "O-",
+  },
+];

@@ -1,5 +1,5 @@
-import { useToastMessages } from "../../common-hooks/useToastMessages";
-import { documentSchema } from "../schema/documentSchema";
+import { useToastMessages } from "@common-hooks/useToastMessages";
+import { documentSchema } from "../schema";
 
 interface DocumentProps {
   documentImageUrl: string;
@@ -33,6 +33,6 @@ export const useDocument = ({ onClose }: UseDocumentProps) => {
   return {
     initialValues,
     schema: documentSchema,
-    handleDocument,
+    submit: handleDocument,
   };
 };
