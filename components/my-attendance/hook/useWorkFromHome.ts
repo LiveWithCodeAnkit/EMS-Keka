@@ -7,7 +7,7 @@ interface Props {
   toDate: Date;
   typeOfSession: string;
   reasonForWorkHome: string;
-  notifyPersons: string;
+  notifyPersons: any[];
 }
 
 export interface UseWorkFromProps {
@@ -21,7 +21,7 @@ export const useWorkFromHome = ({ onClose }: UseWorkFromProps) => {
     toDate: new Date(),
     typeOfSession: "",
     reasonForWorkHome: "",
-    notifyPersons: "",
+    notifyPersons: [],
   };
   const handleWorkHomeRequest = async (values: Props) => {
     console.log("handle WorkHome function:=", values);

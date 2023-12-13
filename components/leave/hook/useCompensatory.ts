@@ -3,14 +3,14 @@ import { useToastMessages } from "@common-hooks/useToastMessages";
 import { compensatorySchema } from "../schema";
 
 interface LeaveProps {
-  dateRange: string;
+  dateRange: Date[]; // Adjust the type to match the selectedDates type
   leaveNote: string;
 }
 
 export const useCompensatory = ({ onClose }: UseLeaveProps) => {
   const { Success } = useToastMessages();
   const initialValues: LeaveProps = {
-    dateRange: "",
+    dateRange: [], // Initialize with an empty array
     leaveNote: "",
   };
 
@@ -22,6 +22,6 @@ export const useCompensatory = ({ onClose }: UseLeaveProps) => {
   return {
     initialValues,
     schema: compensatorySchema,
-    submit: handleCompensatoryLeave,
+     handleCompensatoryLeave,
   };
 };

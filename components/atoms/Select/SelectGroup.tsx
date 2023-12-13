@@ -26,6 +26,20 @@ const SelectGroup: React.FC<Props> = ({
 }) => {
   const animatedComponents = makeAnimated();
 
+  // Define the type for the styles prop
+  const customStyles: any = {
+    control: (base: any, state: any) => ({
+      ...base,
+      background: isDark ? "#2d3748" : "",
+    }),
+    option: (base: any) => ({
+      ...base,
+      background: isDark ? "#2d3748" : "",
+      color: isDark ? "white" : "",
+    }),
+    // Add other styles as needed
+  };
+
   return (
     <FormControl w="full" isInvalid={!!errors[name]}>
       <FormLabel>{label}</FormLabel>
@@ -45,17 +59,7 @@ const SelectGroup: React.FC<Props> = ({
               onChange={(selected) => {
                 field.onChange(selected);
               }}
-              styles={{
-                control: (baseStyles, state) => ({
-                  ...baseStyles,
-                  background: isDark ? "#2d3748" : "",
-                }),
-                option: (base) => ({
-                  ...base,
-                  background: isDark ? "#2d3748" : "",
-                  color: isDark ? "white" : "",
-                }),
-              }}
+              styles={customStyles} // Use the custom styles
             />
             <FormErrorMessage>
               {errors[name] && errors[name].message}

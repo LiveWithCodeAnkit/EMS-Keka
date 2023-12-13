@@ -5,7 +5,7 @@ interface Props {
   fromDate: Date;
   toDate: Date;
   reasonForWeeklyOff: string;
-  notifyPersons: string;
+  notifyPersons: any[];
 }
 
 export const useWeeklyOff = () => {
@@ -14,7 +14,7 @@ export const useWeeklyOff = () => {
     fromDate: new Date(),
     toDate: new Date(),
     reasonForWeeklyOff: "",
-    notifyPersons: "",
+    notifyPersons: [],
   };
 
   const handleWeeklyOffRequest = async (values: Props) => {

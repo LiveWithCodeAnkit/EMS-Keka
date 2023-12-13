@@ -5,7 +5,7 @@ interface LeaveProps {
   toDate: Date;
   typeOfLeave: string;
   reasonForLeave: string;
-  notifyPersons: string;
+  notifyPersons: any[]; // Adjust the type if necessary
   customFromDateStatus: string;
   customToDateStatus: string;
 }
@@ -21,7 +21,7 @@ export const useLeave = ({ onClose }: UseLeaveProps) => {
     toDate: new Date(),
     typeOfLeave: "",
     reasonForLeave: "",
-    notifyPersons: "",
+    notifyPersons: [], 
     customFromDateStatus: "",
     customToDateStatus: "",
   };

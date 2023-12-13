@@ -4,10 +4,11 @@ import { partialDaySchema } from "../schema";
 interface Props {
   datePartial: string;
   typeofProblem: string;
-  comeLateMinti: Number;
+  comeLateMinti: number; // Corrected property name
   lateResone: string;
-  notifyPersons: string;
+  notifyPersons: any[]; // Corrected property name
 }
+
 export const usePartialDay = () => {
   const { Success } = useToastMessages();
   const initialValues: Props = {
@@ -15,8 +16,9 @@ export const usePartialDay = () => {
     typeofProblem: "",
     comeLateMinti: 0,
     lateResone: "",
-    notifyPersons: "",
+    notifyPersons: [],
   };
+  
 
   const handlePartialDayRequest = async (values: Props) => {
     console.log("handle Partial DayRequest function:=", values);

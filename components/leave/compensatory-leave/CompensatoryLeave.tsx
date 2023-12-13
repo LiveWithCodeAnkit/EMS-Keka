@@ -16,7 +16,7 @@ import { TextareaControl } from "@atoms/Textarea";
 import { useCompensatory } from "../hook";
 
 const CompensatoryLeave = ({ onClose }) => {
-  const { initialValues, schema, submit } = useCompensatory({
+  const { initialValues, schema, handleCompensatoryLeave } = useCompensatory({
     onClose,
   });
 
@@ -32,7 +32,7 @@ const CompensatoryLeave = ({ onClose }) => {
 
   return (
     <>
-      <form onSubmit={handleSubmit(submit)}>
+      <form onSubmit={handleSubmit(handleCompensatoryLeave)}>
         <Box
           as="div"
           sx={{

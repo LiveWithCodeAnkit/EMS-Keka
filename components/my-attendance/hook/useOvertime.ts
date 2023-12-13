@@ -5,9 +5,10 @@ interface Props {
   fromDate: Date;
   toDate: Date;
   descriptionOfOvertime: string;
-  otTotalTime: Number;
-  notifyPersons: string;
+  otTotalTime: number;
+  notifyPersons?: any[];
 }
+
 export const useOvertime = () => {
   const { Success } = useToastMessages();
 
@@ -16,9 +17,9 @@ export const useOvertime = () => {
     toDate: new Date(),
     descriptionOfOvertime: "",
     otTotalTime: 0.0,
-    notifyPersons: "",
+    notifyPersons: [],
   };
-
+  
   const handleOvertineRequest = async (values: Props) => {
     console.log("handle Overtine Request:=", values);
     Success("Overtine RequestApplication send", "Overtine Request Sending");
