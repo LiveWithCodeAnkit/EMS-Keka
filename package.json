@@ -15,7 +15,7 @@
     "@chakra-ui/theme-tools": "^2.1.1",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
-    "@fullcalendar/daygrid": "^6.1.10",
+   
     "@fullcalendar/interaction": "^6.1.9",
     "@fullcalendar/react": "^6.1.10",
     "@hookform/resolvers": "^3.3.2",
