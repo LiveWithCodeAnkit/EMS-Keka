@@ -56,7 +56,6 @@ The employee profile section in the Keka portal provides a comprehensive overvie
    - View and manage assigned assets in the "Asset" section.
 
 ## Get Started
-
 1. Clone the repository.
 2. Install dependencies using `npm install`.
 3. Run the development server with `npm run dev`.
