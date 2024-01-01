@@ -7,7 +7,6 @@ Welcome to the Employee Management Portal, a comprehensive web application built
 The employee profile section in the Keka portal provides a comprehensive overview of each employee's information and insights. It includes employment particulars such as job title, employee ID, submitted documents, and availed assets. Additionally, it contains information about their education, interests, and hobbies, helping the team understand the employee beyond their job role.
 
 ## Key Features
-
 1. **Profile Management:**
    - Maintain a detailed and up-to-date profile for each employee, including personal details, job information, and additional insights into education, interests, and hobbies.
    - Explore the "Profile" section to access a comprehensive overview and manage various profile components.
