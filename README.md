@@ -1,3 +1,4 @@
+ # Desktop View Only
 # Employee Management Portal
 
 Welcome to the Employee Management Portal, a comprehensive web application built using Next.js, Chakra UI, and Redux Toolkit. This project aims to streamline and enhance the management of various employee-related tasks within an organization.
