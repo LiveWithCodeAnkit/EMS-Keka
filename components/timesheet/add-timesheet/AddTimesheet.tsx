@@ -82,7 +82,7 @@ const AddTimesheet = ({ onClose }: { onClose: () => void }) => {
         }}
       >
         {fields.map((project, index) => (
-          <Box key={index}>
+          <Box key={project.id || index}>
             <Box w="60%">
               <SelectControl
                 label={`Select Project`}
